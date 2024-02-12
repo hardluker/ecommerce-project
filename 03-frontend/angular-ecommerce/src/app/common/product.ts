@@ -1,3 +1,4 @@
+//Product class for containing the data received from the backend.
 export class Product {
   constructor(
     public sku: string,
