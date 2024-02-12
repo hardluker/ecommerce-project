@@ -7,13 +7,21 @@ import {
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ProductListComponent } from './components/product-list/product-list.component';
-import { HttpClientModule } from '@angular/common/http';
+import {
+  HttpClientModule,
+  provideHttpClient,
+  withFetch,
+} from '@angular/common/http';
 import { ProductService } from './services/product.service';
 
 @NgModule({
   declarations: [AppComponent, ProductListComponent],
   imports: [BrowserModule, HttpClientModule, AppRoutingModule],
-  providers: [provideClientHydration(), ProductService],
+  providers: [
+    provideClientHydration(),
+    ProductService,
+    provideHttpClient(withFetch()),
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
