@@ -15,6 +15,7 @@ import {
 import { ProductService } from './services/product.service';
 import { Routes } from '@angular/router';
 
+//These are the routes for displaying information based on certain conditions.
 const routes: Routes = [
   { path: 'category/:id', component: ProductListComponent },
   { path: 'category', component: ProductListComponent },
