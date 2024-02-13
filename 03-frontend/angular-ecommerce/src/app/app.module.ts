@@ -13,7 +13,7 @@ import {
   withFetch,
 } from '@angular/common/http';
 import { ProductService } from './services/product.service';
-import { Routes } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
 //These are the routes for displaying information based on certain conditions.
 const routes: Routes = [
@@ -26,7 +26,12 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [AppComponent, ProductListComponent],
-  imports: [BrowserModule, HttpClientModule, AppRoutingModule],
+  imports: [
+    RouterModule.forRoot(routes),
+    BrowserModule,
+    HttpClientModule,
+    AppRoutingModule,
+  ],
   providers: [
     provideClientHydration(),
     ProductService,
