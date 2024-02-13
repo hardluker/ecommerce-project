@@ -2,14 +2,18 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { Product } from '../common/product';
+import { ProductCategory } from '../common/product-category';
 
 //This allows for dependency injection
 @Injectable({
   providedIn: 'root',
 })
 export class ProductService {
-  //base url for perform http methods on.
+  //base url for perform http methods on for products.
   private baseUrl = 'http://localhost:8080/api/products';
+
+  //url for http methods on productcategories
+  private categoryUrl = 'http://localhost:8080/api/product-category';
 
   //Constructor to initialize the HttpClient
   constructor(private httpClient: HttpClient) {}
@@ -22,14 +26,27 @@ export class ProductService {
 
     //This is the actual response being received and mapped.
     return this.httpClient
-      .get<GetResponse>(searchUrl)
+      .get<GetResponseProducts>(searchUrl)
       .pipe(map((response) => response._embedded.products));
+  }
+
+  getProductCategories(): Observable<ProductCategory[]> {
+    return this.httpClient
+      .get<GetResponseProductCategory>(this.categoryUrl)
+      .pipe(map((response) => response._embedded.productCategories));
   }
 }
 
 //This is used to define the structure of the response expected.
-interface GetResponse {
+interface GetResponseProducts {
   _embedded: {
     products: Product[];
+  };
+}
+
+//This is used to define the structure of the response expected.
+interface GetResponseProductCategory {
+  _embedded: {
+    productCategories: ProductCategory[];
   };
 }
