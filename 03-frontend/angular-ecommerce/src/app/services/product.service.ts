@@ -15,10 +15,14 @@ export class ProductService {
   constructor(private httpClient: HttpClient) {}
 
   //This method performs the GET request and then
-  //maps the response to an array. Automagically parsing the json!
-  getProductList(): Observable<Product[]> {
+  //maps the response to an array.
+  getProductList(theCategoryId: number): Observable<Product[]> {
+    //Appending to url the endpoint to expose based on specific category ID.
+    const searchUrl = `${this.baseUrl}/search/findByCategoryId?id=${theCategoryId}`;
+
+    //This is the actual response being received and mapped.
     return this.httpClient
-      .get<GetResponse>(this.baseUrl)
+      .get<GetResponse>(searchUrl)
       .pipe(map((response) => response._embedded.products));
   }
 }
