@@ -15,6 +15,7 @@ import {
 import { ProductService } from './services/product.service';
 import { RouterModule, Routes } from '@angular/router';
 import { ProductCategoryMenuComponent } from './components/product-category-menu/product-category-menu.component';
+import { SearchComponent } from './components/search/search.component';
 
 //These are the routes for displaying information based on certain conditions.
 const routes: Routes = [
@@ -31,6 +32,7 @@ const routes: Routes = [
     AppComponent,
     ProductListComponent,
     ProductCategoryMenuComponent,
+    SearchComponent,
   ],
   imports: [
     RouterModule.forRoot(routes),

@@ -1,0 +1,13 @@
+<!--Performs the doSearch method if the enter key is press or if the button is clicked.-->
+<div class="form-header">
+  <input
+    #myInput
+    type="text"
+    placeholder="Search for products ..."
+    class="au-input au-input-xl"
+    (keyup.enter)="doSearch(myInput.value)"
+  />
+  <button (click)="doSearch(myInput.value)" class="au-btn-submit">
+    Search
+  </button>
+</div>
