@@ -33,7 +33,7 @@ export class ProductService {
   getProductCategories(): Observable<ProductCategory[]> {
     return this.httpClient
       .get<GetResponseProductCategory>(this.categoryUrl)
-      .pipe(map((response) => response._embedded.productCategories));
+      .pipe(map((response) => response._embedded.productCategory));
   }
 }
 
@@ -45,8 +45,10 @@ interface GetResponseProducts {
 }
 
 //This is used to define the structure of the response expected.
+// Something I ran into here. It is important that the _embedded sub item matches the collectionResourceRel = "productCategory"
+//I had this as "productCategories" and was getting a null response.
 interface GetResponseProductCategory {
   _embedded: {
-    productCategories: ProductCategory[];
+    productCategory: ProductCategory[];
   };
 }
