@@ -26,7 +26,11 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [AppComponent, ProductListComponent, ProductCategoryMenuComponent],
+  declarations: [
+    AppComponent,
+    ProductListComponent,
+    ProductCategoryMenuComponent,
+  ],
   imports: [
     RouterModule.forRoot(routes),
     BrowserModule,

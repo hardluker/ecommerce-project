@@ -45,7 +45,7 @@ interface GetResponseProducts {
 }
 
 //This is used to define the structure of the response expected.
-// Something I ran into here. It is important that the _embedded sub item matches the collectionResourceRel = "productCategory"
+// Something I ran into here. It is important that the _embedded sub item matches the collectionResourceRel = "productCategory" from the backend
 //I had this as "productCategories" and was getting a null response.
 interface GetResponseProductCategory {
   _embedded: {
