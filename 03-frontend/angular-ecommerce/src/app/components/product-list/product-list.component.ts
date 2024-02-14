@@ -13,6 +13,7 @@ export class ProductListComponent {
   products: Product[] = [];
   //Initializing the current category id for routing.
   currentCategoryId: number = 1;
+  searchMode: boolean = false;
 
   //Constructor to initialze a product service and active route
   constructor(
@@ -30,6 +31,27 @@ export class ProductListComponent {
   //This method calls the service to return the stream of data.
   //The data is received and the array is populated with this data.
   listProducts() {
+    //Enables search mode if the route has a parameter 'keyword'.
+    this.searchMode = this.route.snapshot.paramMap.has('keyword');
+
+    if (this.searchMode) {
+      this.handleSearchProducts();
+    } else {
+      this.handleListProducts();
+    }
+  }
+
+  handleSearchProducts() {
+    //Storing the keyword in a string.
+    const keyword: string = this.route.snapshot.paramMap.get('keyword')!;
+
+    //Now search for products with the given keyword.
+    this.productService.searchProducts(keyword).subscribe((data) => {
+      this.products = data;
+    });
+  }
+
+  handleListProducts() {
     // check if "id" parameter is available
     const hasCategoryId: boolean = this.route.snapshot.paramMap.has('id');
 
