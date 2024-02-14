@@ -14,4 +14,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     //Essentially, this is a list of products only in the specific category.
     Page<Product> findByCategoryId(@Param("id") Long id, Pageable pageable);
 
+    //Method to find by name containing this is for searching.
+    Page<Product> findByNameContaining(@Param("name") String name, Pageable page);
+
 }
