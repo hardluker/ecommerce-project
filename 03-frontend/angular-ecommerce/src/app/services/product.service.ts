@@ -47,6 +47,13 @@ export class ProductService {
       .get<GetResponseProducts>(searchUrl)
       .pipe(map((response) => response._embedded.products));
   }
+
+  getProduct(productId: number): Observable<Product> {
+    //Build url based on product id.
+    const productUrl = `${this.baseUrl}/${productId}`;
+
+    return this.httpClient.get<Product>(productUrl);
+  }
 }
 
 //This is used to define the structure of the response expected.
