@@ -91,13 +91,13 @@ h6 {
 }
 
 a {
+  text-decoration: none !important; /*Had to ad this because the text decoration is not going away. Fortunately I have no plans to have this in application at all.*/
   display: inline-block;
 }
 
 a:active,
 a:focus,
 a:hover {
-  text-decoration: none;
   outline: 0;
 }
 
@@ -739,6 +739,10 @@ table.table.table-bordered th {
 }
 .detail-section {
   margin-top: 60px;
+}
+
+.detail-img {
+  width: 30%;
 }
 /**/
 
