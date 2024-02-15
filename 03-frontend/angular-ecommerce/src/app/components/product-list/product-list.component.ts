@@ -12,8 +12,14 @@ export class ProductListComponent {
   //Initializing an array to contain the "list" of products
   products: Product[] = [];
   //Initializing the current category id for routing.
+  previousCategoryId: number = 1;
   currentCategoryId: number = 1;
   searchMode: boolean = false;
+
+  //Properties for pagination
+  pageNumber: number = 1;
+  pageSize: number = 10;
+  totalElements: number = 0;
 
   //Constructor to initialze a product service and active route
   constructor(
@@ -62,11 +68,38 @@ export class ProductListComponent {
       // not category id available .... default to category 1
       this.currentCategoryId = 1;
     }
-    //Now get the products for the given category id
+
+    //
+    //Check if there is a different category than previous
+    //Angular will reuse a component if it is currently being viewed
+    //
+
+    // if we have a different category id than previous
+    // set pagenumber back to 1
+
+    if (this.previousCategoryId != this.currentCategoryId) {
+      this.pageNumber = 1;
+    }
+
+    this.previousCategoryId = this.currentCategoryId;
+    console.log(
+      `currentCategoryId=${this.currentCategoryId}, pageNumber=${this.pageNumber}`
+    );
+
+    //Now get the products for the given category id, page number and page size
+    //Spring boot uses 0-based and angular uses 1-based in this context.
+    //Thus, having to account for that.
     this.productService
-      .getProductList(this.currentCategoryId)
+      .getProductListPaginate(
+        this.pageNumber - 1,
+        this.pageSize,
+        this.currentCategoryId
+      )
       .subscribe((data) => {
-        this.products = data;
+        this.products = data._embedded.products;
+        this.pageNumber = data.page.number + 1;
+        this.pageSize = data.page.size;
+        this.totalElements = data.page.totalElements;
       });
   }
 }
