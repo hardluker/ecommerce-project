@@ -18,6 +18,16 @@ export class ProductService {
   //Constructor to initialize the HttpClient
   constructor(private httpClient: HttpClient) {}
 
+  //This method performs the GET request and then
+  //maps the response to an array.
+  getProductList(theCategoryId: number): Observable<Product[]> {
+    //Appending to url the endpoint to expose based on specific category ID.
+    const searchUrl = `${this.baseUrl}/search/findByCategoryId?id=${theCategoryId}`;
+
+    //This is the actual response being received and mapped.
+    return this.getProducts(searchUrl);
+  }
+
   getProductListPaginate(
     page: number,
     pageSize: number,
@@ -29,16 +39,6 @@ export class ProductService {
       `&page=${page}&size=${pageSize}`;
 
     return this.httpClient.get<GetResponseProducts>(searchUrl);
-  }
-
-  //This method performs the GET request and then
-  //maps the response to an array.
-  getProductList(theCategoryId: number): Observable<Product[]> {
-    //Appending to url the endpoint to expose based on specific category ID.
-    const searchUrl = `${this.baseUrl}/search/findByCategoryId?id=${theCategoryId}`;
-
-    //This is the actual response being received and mapped.
-    return this.getProducts(searchUrl);
   }
 
   getProductCategories(): Observable<ProductCategory[]> {
@@ -53,6 +53,19 @@ export class ProductService {
 
     //This is the actual response being received and mapped.
     return this.getProducts(searchUrl);
+  }
+
+  searchProductsPaginate(
+    page: number,
+    pageSize: number,
+    keyword: string
+  ): Observable<GetResponseProducts> {
+    //Appending to the base url. finding by keyword, page and size.
+    const searchUrl =
+      `${this.baseUrl}/search/findByNameContaining?name=${keyword}` +
+      `&page=${page}&size=${pageSize}`;
+
+    return this.httpClient.get<GetResponseProducts>(searchUrl);
   }
 
   private getProducts(searchUrl: string): Observable<Product[]> {
