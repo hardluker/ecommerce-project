@@ -115,4 +115,8 @@ export class ProductListComponent {
       this.totalElements = data.page.totalElements;
     };
   }
+
+  addToCart(product: Product) {
+    console.log(`Adding to cart: ${product.name}, ${product.unitPrice}`);
+  }
 }
