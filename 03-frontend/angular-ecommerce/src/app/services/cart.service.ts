@@ -27,14 +27,14 @@ export class CartService {
     //check if we found it in cart already
     alreadyExistsInCart = existingCartItem !== undefined;
     if (alreadyExistsInCart && existingCartItem) {
-      //If so, increase quanity
+      //If so, increase quantity
       existingCartItem.quantity++;
     } else {
       // just add the item to the array
       this.cartItems.push(cartItem);
     }
 
-    //compute cart total price and quantity
+    //compute cart total price and quantity, store in variables
     this.computeCartTotals();
   }
 
