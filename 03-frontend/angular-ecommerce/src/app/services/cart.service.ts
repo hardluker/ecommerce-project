@@ -38,6 +38,26 @@ export class CartService {
     this.computeCartTotals();
   }
 
+  removeFromCart(cartItem: CartItem) {
+    //Find the index of the item to remove.
+    const indexOfItemToRemove = this.cartItems.findIndex(
+      (tempCartItem) => tempCartItem.id == cartItem.id
+    );
+
+    //Remove the item from the array.
+    if (indexOfItemToRemove > -1) {
+      this.cartItems.splice(indexOfItemToRemove, 1);
+    }
+  }
+
+  decreaseQuantity(cartItem: CartItem) {
+    cartItem.quantity--;
+    if (cartItem.quantity === 0) {
+      this.removeFromCart(cartItem);
+    } else {
+      this.computeCartTotals();
+    }
+  }
   computeCartTotals() {
     let totalPriceValue: number = 0;
     let totalQuantityValue: number = 0;

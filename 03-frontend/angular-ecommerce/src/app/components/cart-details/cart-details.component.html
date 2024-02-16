@@ -23,7 +23,35 @@
             </td>
             <td>
               <div class="items">
-                <label>Quantity:</label> {{ tempCartItem.quantity }}
+                <label>Quantity:</label>
+                <div class="row no-gutters">
+                  <div class="col">
+                    <button
+                      class="btn btn-primary btn-sm"
+                      (click)="increaseQuantity(tempCartItem)"
+                    >
+                      <i class="fas fa-plus"></i>
+                    </button>
+                  </div>
+                  <div class="col">{{ tempCartItem.quantity }}</div>
+                  <div class="col">
+                    <button
+                      class="btn btn-primary btn-sm"
+                      (click)="decreaseQuantity(tempCartItem)"
+                    >
+                      <i class="fas fa-minus"></i>
+                    </button>
+                  </div>
+                  <div>
+                    <button
+                      (click)="removeFromCart(tempCartItem)"
+                      class="btn btn-primary btn-small mt-2"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                  <div class="col-8"></div>
+                </div>
               </div>
               <p class="mt-2">
                 Subtotal:

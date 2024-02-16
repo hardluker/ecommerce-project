@@ -31,4 +31,16 @@ export class CartDetailsComponent {
     //compute cart total price and store in cartService variable.
     this.cartService.computeCartTotals();
   }
+
+  increaseQuantity(cartItem: CartItem) {
+    this.cartService.addToCart(cartItem);
+  }
+
+  decreaseQuantity(cartItem: CartItem) {
+    this.cartService.decreaseQuantity(cartItem);
+  }
+
+  removeFromCart(cartItem: CartItem) {
+    this.cartService.removeFromCart(cartItem);
+  }
 }
