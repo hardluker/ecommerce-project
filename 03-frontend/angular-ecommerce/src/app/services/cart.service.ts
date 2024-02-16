@@ -48,6 +48,8 @@ export class CartService {
     if (indexOfItemToRemove > -1) {
       this.cartItems.splice(indexOfItemToRemove, 1);
     }
+
+    this.computeCartTotals();
   }
 
   decreaseQuantity(cartItem: CartItem) {
