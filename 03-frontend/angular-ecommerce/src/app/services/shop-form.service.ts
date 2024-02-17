@@ -1,11 +1,34 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, map, of } from 'rxjs';
+import { Country } from '../common/country';
+import { State } from '../common/state';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ShopFormService {
-  constructor() {}
+  private countriesUrl = 'http://localhost:8080/api/countries';
+  private statesUrl = 'http://localhost:8080/api/states';
+
+  constructor(private httpClient: HttpClient) {}
+
+  //Method to map json response for countries into an observable array of Country.
+  getCountries(): Observable<Country[]> {
+    return this.httpClient
+      .get<GetResponseCountries>(this.countriesUrl)
+      .pipe(map((response) => response._embedded.countries));
+  }
+
+  //Method to map json response for countries into an observable array of Country.
+  getStates(countryCode: string): Observable<State[]> {
+    //Search Url
+    const searchStatesUrl = `${this.statesUrl}/search/findByCountryCode?code=${countryCode}`;
+
+    return this.httpClient
+      .get<GetResponseStates>(searchStatesUrl)
+      .pipe(map((response) => response._embedded.states));
+  }
 
   getCreditCardMonths(startMonth: number): Observable<number[]> {
     let data: number[] = [];
@@ -35,4 +58,18 @@ export class ShopFormService {
     }
     return of(data);
   }
+}
+
+//Interface to unwrap JSON from REST _embedded entry for countries
+interface GetResponseCountries {
+  _embedded: {
+    countries: Country[];
+  };
+}
+
+//Interface to unwrap JSON from REST _embedded entry states
+interface GetResponseStates {
+  _embedded: {
+    states: State[];
+  };
 }
