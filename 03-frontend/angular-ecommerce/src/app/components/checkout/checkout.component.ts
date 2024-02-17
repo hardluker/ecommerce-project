@@ -36,6 +36,7 @@ export class CheckoutComponent {
 
   ngOnInit(): void {
     this.checkoutFormGroup = this.formBuilder.group({
+      //Customer Form Fields
       customer: this.formBuilder.group({
         firstName: new FormControl('', [
           Validators.required,
@@ -52,20 +53,50 @@ export class CheckoutComponent {
           Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'), //regex for email address format.
         ]),
       }),
+
+      //Shipping Address Form Fields
       shippingAddress: this.formBuilder.group({
-        street: [''],
-        city: [''],
-        state: [''],
-        zipCode: [''],
-        country: [''],
+        street: new FormControl('', [
+          Validators.required,
+          Validators.minLength(2),
+          ShopValidators.notOnlyWhitespace,
+        ]),
+        city: new FormControl('', [
+          Validators.required,
+          Validators.minLength(2),
+          ShopValidators.notOnlyWhitespace,
+        ]),
+        state: new FormControl('', [Validators.required]),
+        zipCode: new FormControl('', [
+          Validators.required,
+          Validators.minLength(2),
+          ShopValidators.notOnlyWhitespace,
+        ]),
+        country: new FormControl('', [Validators.required]),
       }),
+
+      //Billing Address Form fields
       billingAddress: this.formBuilder.group({
-        street: [''],
-        city: [''],
-        state: [''],
-        zipCode: [''],
-        country: [''],
+        street: new FormControl('', [
+          Validators.required,
+          Validators.minLength(2),
+          ShopValidators.notOnlyWhitespace,
+        ]),
+        city: new FormControl('', [
+          Validators.required,
+          Validators.minLength(2),
+          ShopValidators.notOnlyWhitespace,
+        ]),
+        state: new FormControl('', [Validators.required]),
+        zipCode: new FormControl('', [
+          Validators.required,
+          Validators.minLength(2),
+          ShopValidators.notOnlyWhitespace,
+        ]),
+        country: new FormControl('', [Validators.required]),
       }),
+
+      //Credit Card Form Fields
       creditCard: this.formBuilder.group({
         cardType: [''],
         nameOnCard: [''],
@@ -105,6 +136,36 @@ export class CheckoutComponent {
   }
   get email() {
     return this.checkoutFormGroup.get('customer.email');
+  }
+  get shippingAddressStreet() {
+    return this.checkoutFormGroup.get('shippingAddress.street');
+  }
+  get shippingAddressCity() {
+    return this.checkoutFormGroup.get('shippingAddress.city');
+  }
+  get shippingAddressState() {
+    return this.checkoutFormGroup.get('shippingAddress.state');
+  }
+  get shippingAddressZipCode() {
+    return this.checkoutFormGroup.get('shippingAddress.zipCode');
+  }
+  get shippingAddressCountry() {
+    return this.checkoutFormGroup.get('shippingAddress.country');
+  }
+  get billingAddressStreet() {
+    return this.checkoutFormGroup.get('billingAddress.street');
+  }
+  get billingAddressCity() {
+    return this.checkoutFormGroup.get('billingAddress.city');
+  }
+  get billingAddressState() {
+    return this.checkoutFormGroup.get('billingAddress.state');
+  }
+  get billingAddressZipCode() {
+    return this.checkoutFormGroup.get('billingAddress.zipCode');
+  }
+  get billingAddressCountry() {
+    return this.checkoutFormGroup.get('billingAddress.country');
   }
 
   //Definition of form submission logic.
