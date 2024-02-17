@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ShopFormService } from '../../services/shop-form.service';
+import { Country } from '../../common/country';
+import { State } from '../../common/state';
 
 @Component({
   selector: 'app-checkout',
@@ -15,6 +17,9 @@ export class CheckoutComponent {
 
   creditCardYears: number[] = [];
   creditCardMonths: number[] = [];
+
+  countries: Country[] = [];
+  states: State[] = [];
 
   //Injecting formbuilder and shopFormService
   constructor(
@@ -53,10 +58,8 @@ export class CheckoutComponent {
       }),
     });
 
-    // Populate credit card months. The months are zero-based
+    // Populate credit card months. The months are zero-based thus incrementing by 1
     const startMonth: number = new Date().getMonth() + 1;
-    console.log('Start Month' + startMonth);
-
     this.shopFormService.getCreditCardMonths(startMonth).subscribe((data) => {
       console.log('Retreived credit card months: ' + JSON.stringify(data));
       this.creditCardMonths = data;
@@ -66,6 +69,12 @@ export class CheckoutComponent {
     this.shopFormService.getCreditCardYears().subscribe((data) => {
       console.log('Retrieved Credit CardYears: ' + JSON.stringify(data));
       this.creditCardYears = data;
+    });
+
+    //Populate Countries
+    this.shopFormService.getCountries().subscribe((data) => {
+      console.log('Retreived countries: ' + JSON.stringify(data));
+      this.countries = data;
     });
   }
 
