@@ -84,4 +84,34 @@ export class CheckoutComponent {
       this.checkoutFormGroup.controls['billingAddress'].reset();
     }
   }
+
+  handleMonthsAndYears() {
+    //Accessing the credit card form
+    const creditCardFormGroup = this.checkoutFormGroup.get('creditCard');
+
+    //initializing current year and selected year
+    const currentYear: number = new Date().getFullYear();
+    const selectedYear: number = Number(
+      creditCardFormGroup?.value.expirationYear
+    );
+
+    //Months field is dependent on year.
+    let startMonth: number;
+
+    //If the selected year is the current year, display remaining months
+    if (currentYear === selectedYear) {
+      startMonth = new Date().getMonth() + 1;
+    }
+
+    //Else, start from the first of the year
+    else {
+      startMonth = 1;
+    }
+
+    //Update the month dropdown data.
+    this.shopFormService.getCreditCardMonths(startMonth).subscribe((data) => {
+      console.log('Retreived credit card months: ' + JSON.stringify(data));
+      this.creditCardMonths = data;
+    });
+  }
 }
