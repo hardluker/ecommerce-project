@@ -373,6 +373,7 @@
 
         <!--End Form Group-->
         <!--Credit Card Form Group-->
+        <!-- Credit Card Form Group -->
         <div formGroupName="creditCard" class="form-area">
           <h3>Credit/Debit Card</h3>
 
@@ -381,9 +382,22 @@
             <div class="col-md-9">
               <div class="input-space">
                 <select formControlName="cardType">
+                  <option value="" disabled selected>Select Card Type</option>
                   <option>Visa</option>
                   <option>Mastercard</option>
                 </select>
+                <!-- Card Type Validation -->
+                <div
+                  *ngIf="
+                    creditCardType?.invalid &&
+                    (creditCardType?.dirty || creditCardType?.touched)
+                  "
+                  class="alert alert-danger mt-1"
+                >
+                  <div *ngIf="creditCardType?.errors?.['required']">
+                    Card Type is required
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -393,6 +407,24 @@
             <div class="col-md-9">
               <div class="input-space">
                 <input formControlName="nameOnCard" type="text" />
+                <!-- Name on Card Validation -->
+                <div
+                  *ngIf="
+                    creditCardNameOnCard?.invalid &&
+                    (creditCardNameOnCard?.dirty ||
+                      creditCardNameOnCard?.touched)
+                  "
+                  class="alert alert-danger mt-1"
+                >
+                  <div
+                    *ngIf="creditCardNameOnCard?.errors?.['required'] || creditCardNameOnCard?.errors?.['notOnlyWhitespace']"
+                  >
+                    Name on Card is required
+                  </div>
+                  <div *ngIf="creditCardNameOnCard?.errors?.['minlength']">
+                    Name on Card must be at least 2 characters
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -402,6 +434,21 @@
             <div class="col-md-9">
               <div class="input-space">
                 <input formControlName="cardNumber" type="text" />
+                <!-- Card Number Validation -->
+                <div
+                  *ngIf="
+                    creditCardNumber?.invalid &&
+                    (creditCardNumber?.dirty || creditCardNumber?.touched)
+                  "
+                  class="alert alert-danger mt-1"
+                >
+                  <div *ngIf="creditCardNumber?.errors?.['required']">
+                    Card Number is required
+                  </div>
+                  <div *ngIf="creditCardNumber?.errors?.['pattern']">
+                    Card Number must be a 16-digit number
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -411,6 +458,22 @@
             <div class="col-md-9">
               <div class="input-space">
                 <input formControlName="securityCode" type="text" />
+                <!-- Security Code Validation -->
+                <div
+                  *ngIf="
+                    creditCardSecurityCode?.invalid &&
+                    (creditCardSecurityCode?.dirty ||
+                      creditCardSecurityCode?.touched)
+                  "
+                  class="alert alert-danger mt-1"
+                >
+                  <div *ngIf="creditCardSecurityCode?.errors?.['required']">
+                    Security Code is required
+                  </div>
+                  <div *ngIf="creditCardSecurityCode?.errors?.['pattern']">
+                    Security Code must be a 3-digit number
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -444,6 +507,7 @@
             </div>
           </div>
         </div>
+
         <!--Order Details-->
         <div class="form-area">
           <h3>Review Your Order</h3>
