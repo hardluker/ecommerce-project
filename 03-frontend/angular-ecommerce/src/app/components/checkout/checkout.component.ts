@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { ShopFormService } from '../../services/shop-form.service';
 import { Country } from '../../common/country';
 import { State } from '../../common/state';
@@ -31,9 +36,18 @@ export class CheckoutComponent {
   ngOnInit(): void {
     this.checkoutFormGroup = this.formBuilder.group({
       customer: this.formBuilder.group({
-        firstName: [''],
-        lastName: [''],
-        email: [''],
+        firstName: new FormControl('', [
+          Validators.required,
+          Validators.minLength(2),
+        ]),
+        lastName: new FormControl('', [
+          Validators.required,
+          Validators.minLength(2),
+        ]),
+        email: new FormControl('', [
+          Validators.required,
+          Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'), //regex for email address format.
+        ]),
       }),
       shippingAddress: this.formBuilder.group({
         street: [''],
@@ -79,8 +93,23 @@ export class CheckoutComponent {
     });
   }
 
+  //Getters for form validation
+  get firstName() {
+    return this.checkoutFormGroup.get('customer.firstName');
+  }
+  get lastName() {
+    return this.checkoutFormGroup.get('customer.lastName');
+  }
+  get email() {
+    return this.checkoutFormGroup.get('customer.email');
+  }
+
+  //Definition of form submission logic.
   onSubmit() {
     console.log('Handle the submit button');
+    if (this.checkoutFormGroup.invalid) {
+      this.checkoutFormGroup.markAllAsTouched();
+    }
     console.log(this.checkoutFormGroup.get('customer')?.value);
     console.log(
       'The email address is ' +
@@ -96,6 +125,7 @@ export class CheckoutComponent {
     );
   }
 
+  //Logic for copying shipping address to billing address.
   copyShippingAddressToBillingAddress(event: Event) {
     const target = event.target as HTMLInputElement; //I had to clarify this to ensure the compiler will accept it as HTMLInputElement
     if (target.checked) {
@@ -110,6 +140,7 @@ export class CheckoutComponent {
     }
   }
 
+  //Method for dynamically displaying months and years in cc form
   handleMonthsAndYears() {
     //Accessing the credit card form
     const creditCardFormGroup = this.checkoutFormGroup.get('creditCard');
@@ -140,6 +171,7 @@ export class CheckoutComponent {
     });
   }
 
+  //Method for retreiving states from service via current country code.
   getStates(formGroupName: string) {
     const formGroup = this.checkoutFormGroup.get(formGroupName);
 
