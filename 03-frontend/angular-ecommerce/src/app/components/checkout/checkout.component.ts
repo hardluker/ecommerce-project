@@ -9,6 +9,7 @@ import { ShopFormService } from '../../services/shop-form.service';
 import { Country } from '../../common/country';
 import { State } from '../../common/state';
 import { ShopValidators } from '../../common/shop-validators';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-checkout',
@@ -28,13 +29,18 @@ export class CheckoutComponent {
   shippingAddressStates: State[] = [];
   billingAddressStates: State[] = [];
 
-  //Injecting formbuilder and shopFormService
+  //Injecting formbuilder, shopFormService, and cartService
   constructor(
     private formBuilder: FormBuilder,
-    private shopFormService: ShopFormService
+    private shopFormService: ShopFormService,
+    private cartService: CartService
   ) {}
 
   ngOnInit(): void {
+    // Subscribing to the cartService for order details.
+    this.reviewCartDetails();
+
+    //A Checkout Form Group created postConstruct
     this.checkoutFormGroup = this.formBuilder.group({
       //Customer Form Fields
       customer: this.formBuilder.group({
@@ -135,6 +141,16 @@ export class CheckoutComponent {
       console.log('Retreived countries: ' + JSON.stringify(data));
       this.countries = data;
     });
+  }
+
+  // Subscribing to the cartService for order details.
+  reviewCartDetails() {
+    this.cartService.totalQuantity.subscribe(
+      (totalQuantity) => (this.totalQuantity = totalQuantity)
+    );
+    this.cartService.totalPrice.subscribe(
+      (totalPrice) => (this.totalPrice = totalPrice)
+    );
   }
 
   //Getters for form validation
