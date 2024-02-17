@@ -32,7 +32,7 @@ export class CheckoutComponent {
         zipCode: [''],
         country: [''],
       }),
-      credditCard: this.formBuilder.group({
+      creditCard: this.formBuilder.group({
         cardType: [''],
         nameOnCard: [''],
         cardNumber: [''],
