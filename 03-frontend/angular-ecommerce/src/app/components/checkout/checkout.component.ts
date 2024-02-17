@@ -47,4 +47,15 @@ export class CheckoutComponent {
     console.log('Handle the submit button');
     console.log(this.checkoutFormGroup.get('customer')?.value); // have to use the safe navigation operator.
   }
+
+  copyShippingAddressToBillingAddress(event: Event) {
+    const target = event.target as HTMLInputElement; //I had to clarify this to ensure the compiler will accept it as HTMLInputElement
+    if (target.checked) {
+      this.checkoutFormGroup.controls['billingAddress'].setValue(
+        this.checkoutFormGroup.controls['shippingAddress'].value
+      );
+    } else {
+      this.checkoutFormGroup.controls['billingAddress'].reset();
+    }
+  }
 }
